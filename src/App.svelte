@@ -1,10 +1,20 @@
 <script>
-	export let name;
+    import { onMount } from 'svelte'
+
+	let channels =[];
+	onMount(async () => {
+		const response = await fetch('http://localhost:1323/channels', {
+			mode: "cors",
+		});
+		channels = await response.json();
+	});
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	{#each channels as c}
+	    <div>{c.ChannelID}</div>
+	    <div>{c.Title}</div>
+	{/each}
 </main>
 
 <style>
